@@ -4,11 +4,15 @@ class TumblrThemer::Post::Photo < TumblrThemer::Post
   end
 
   def photo_size size
-    photo.find {|p| p['width'] == size}
+    photo.find {|p| p['width'] == size}||photo.first
+  end
+
+  def exif
+    data['photos'].first['exif'] || {}
   end
 
   def exif?
-    boolify(photo&&photo['exif'])
+    boolify(exif)
   end
 
   tag('PhotoAlt') { 'alt photo' }
@@ -22,7 +26,9 @@ class TumblrThemer::Post::Photo < TumblrThemer::Post
   tag('LinkCloseTag') { '</a>' }
 
   [500,400,250,100].each do |size|
-    tag("PhotoURL-#{size}") { photo_size(size)['url'] }
+    tag("PhotoURL-#{size}") do
+      photo_size(size)['url']
+    end
     tag("PhotoWidth-#{size}") { photo_size(size)['width'] }
     tag("PhotoHeight-#{size}") { photo_size(size)['height'] }
   end
@@ -31,14 +37,14 @@ class TumblrThemer::Post::Photo < TumblrThemer::Post
   block('HighRes') { false }
 
   block("Exif") { exif? }
-  block("Camera") { exif? && boolify(photo['exif']['Camera'])}
-  tag("Camera") { photo['exif']['Camera'] }
-  block("Aperture") { exif? && boolify(photo['exif']['Aperture'])}
-  tag("Aperture") { photo['exif']['Aperture'] }
-  block("Exposure") { exif? && boolify(photo['exif']['Exposure'])}
-  tag("Exposure") { photo['exif']['Exposure'] }
-  block("FocalLength") { exif? && boolify(photo['exif']['FocalLength'])}
-  tag("FocalLength") { photo['exif']['FocalLength'] }
-  block("ISO") { exif? && boolify(photo['exif']['ISO'])}
-  tag("ISO") { photo['exif']['ISO'] }
+  block("Camera") { exif? && boolify(exif['Camera'])}
+  tag("Camera") { exif['Camera'] }
+  block("Aperture") { exif? && boolify(exif['Aperture'])}
+  tag("Aperture") { exif['Aperture'] }
+  block("Exposure") { exif? && boolify(exif['Exposure'])}
+  tag("Exposure") { exif['Exposure'] }
+  block("FocalLength") { exif? && boolify(exif['FocalLength'])}
+  tag("FocalLength") { exif['FocalLength'] }
+  block("ISO") { exif? && boolify(exif['ISO'])}
+  tag("ISO") { exif['ISO'] }
 end

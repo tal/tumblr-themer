@@ -30,6 +30,14 @@ module TumblrThemer::TagHelper
       tags[name] = blk
     end
 
+    def for_each name, klass, &blk
+      tag_iterators[name] = {klass: klass, blk: blk}
+    end
+
+    def tag_iterators
+      @tag_iterators ||= {}
+    end
+
     def blocks
       @blocks ||= {}
     end
@@ -41,6 +49,7 @@ module TumblrThemer::TagHelper
     def inherited subklass
       subklass.instance_variable_set(:@tags,@tags.dup)
       subklass.instance_variable_set(:@blocks,@blocks.dup)
+      subklass.instance_variable_set(:@tag_iterators,@tag_iterators.dup)
     end
   end
 

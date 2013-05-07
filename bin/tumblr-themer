@@ -1,0 +1,8 @@
+#! /usr/bin/env ruby
+$:.unshift(File.join(File.dirname(__FILE__),'../lib'))
+
+require 'rubygems'
+require 'tumblr-themer'
+require 'tumblr-themer/cli'
+
+TumblrThemer::CLI.start(ARGV)

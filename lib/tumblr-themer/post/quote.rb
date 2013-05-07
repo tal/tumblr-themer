@@ -1,21 +1,10 @@
 class TumblrThemer::Post::Quote < TumblrThemer::Post
-  tag 'Quote' do
-    data['text']
-  end
+  tag('Quote') { data['text'] }
 
-  block 'Source' do
-    !!data['source']
-  end
-
-  tag 'Source' do
-    data['source']
-  end
+  block('Source') { boolify(data['source']) }
+  tag('Source')   { data['source'] }
 
   tag 'Length' do
-    # case rand(3)
-    #   when 0: 'short'
-    #   when 1: 'medium'
-    #   when 2: 'long'
-    # end
+    %w{short medium long}[rand(3)]
   end
 end

@@ -1,67 +1,53 @@
 class TumblrThemer::Theme
   include TumblrThemer::TagHelper
-
-  POST_TYPES = %w{
-    text
-    photo
-    panorama
-    photoset
-    quote
-    link
-    chat
-    audio
-    video
-    answer
-  }
+  attr_reader :body
 
   def initialize dirname
     base = File.expand_path(dirname)
 
     @body = File.read(File.join(base,'index.html'))
     @posts = {}
-    posts = Dir[File.join(base,'posts/*.html')].collect do |f|
-      basename = File.basename(f).sub(/\.html$/,'').gsub(/[_-]/,' ').capitalize
+    Dir[File.join(base,'posts/*.html')].each do |f|
+      basename = File.basename(f).sub(/\.html$/,'').gsub(/[_-]/,' ')
       html = File.read(f)
-      @posts[basename.downcase] = TumblrThemer::HtmlSnippet.new(html)
+      @posts[basename] = html
+    end
 
-      str = "{block:#{basename}}"
+    posts_html = @posts.collect do |basename, html|
+      str = "{block:#{basename.capitalize}}"
       str << html
-      str << "{/block:#{basename}}"
+      str << "{/block:#{basename.capitalize}}"
     end
 
-    # posts.unshift "{block:Posts}"
-    # posts.push    "{/block:Posts}"
-
-    # @body.sub!('{block:Posts/}',posts.join("\n"))
+    @body.gsub!("{PostsCode}",posts_html.join("\n"))
   end
 
-  def post type
-    str = @body
-    block(str,'posts',true)
-
-    POST_TYPES.each do |_type|
-      block(str,_type,type==_type)
-    end
-
-    str
-  end
-
-  attr_reader :blog_data
-  def render
-    data = TumblrThemer::API.posts['response']
-    post_data = data['posts']
+  def get_data
+    return @post_data if defined?(@post_data)
+    data = TumblrThemer::API.selected_posts
     @blog_data = data['blog']
+    @post_data = data['posts']
+  end
 
-    posts = []
-    post_data.each_with_index do |post_datum,i|
-      begin
-        klass = TumblrThemer::Post.const_get(post_datum['type'].capitalize)
-        posts << klass.new(@posts[post_datum['type']],post_datum,i)
-      rescue NameError
+  def post_data
+    @post_data || (get_data && @post_data)
+  end
+
+  def blog_data
+    @blog_data || (get_data && @blog_data)
+  end
+
+  def render
+    html = TumblrThemer::HtmlSnippet.new(@body)
+
+    self.class.tag_iterators.each do |name, opts|
+      vals = instance_exec(self,&opts[:blk])
+      html.block(name) do |str|
+        vals.collect.with_index do |val,i|
+          opts[:klass].render(str,val,i)
+        end.join("\n")
       end
     end
-
-    html = TumblrThemer::HtmlSnippet.new(@body.sub('{block:Posts/}',posts.collect(&:render).join("\n")))
 
     self.class.blocks.each do |name,blk|
       html.block(name,instance_exec(self,&blk))
@@ -74,15 +60,19 @@ class TumblrThemer::Theme
     html.str
   end
 
+  for_each('Posts',TumblrThemer::Post) { post_data }
+
   tag('Title') { blog_data['title'] }
   tag('Description') { blog_data['description'] }
   tag('CopyrightYears') {'2007-2013'}
   tag('CustomCSS') {''}
 
-  block('IndexPage') { true }
-  block('PermalinkPage') { false }
-  block('PostTitle') { false }
-  tag('PostTitle') {''}
-  block('PostSummary') { false }
-  tag('PostSummary') {''}
+  # block('IndexPage') { true }
+  # block('PermalinkPage') { false }
+  # block('PostTitle') { false }
+  # tag('PostTitle') {''}
+  # block('PostSummary') { false }
+  # tag('PostSummary') {''}
+
+  block('Date') { false }
 end

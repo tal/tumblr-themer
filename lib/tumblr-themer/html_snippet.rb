@@ -11,7 +11,7 @@ class TumblrThemer::HtmlSnippet
   end
 
   def block _type, tf=true
-    regex = Regexp.new("{block:#{_type}}(.*){/block:#{_type}}",Regexp::MULTILINE)
+    regex = Regexp.new("{block:#{_type}}(.*?){/block:#{_type}}",Regexp::MULTILINE)
 
     if tf
       if block_given?
