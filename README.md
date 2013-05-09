@@ -20,13 +20,24 @@ or have it place the files in the current directory with:
 
 The folder structure generated is as such:
 
-    index.html      #=> base layout file
-    config.ru       #=> Rack file to allow for use with pow or any other rack app
-    posts/text.html #=> html for text post
-    posts/….html    #=> html for each post type
+    index.html        #=> base layout file
+    config.ru         #=> Rack file to allow for use with pow or any other rack app
+    posts/text.html   #=> html for text post
+    posts/….html      #=> html for each post type
+    tumblr-themer.yml #=> config file
     
 The utility can inject all the post types into the custom tag `{PostsCode}`
 so that you can keep your theme more organized. I'm looking to add more custom partial support in the future.
+
+### Customization
+
+The `tumblr-themer.yml` file contains configuration information.
+
+The first thing you need is an api key, found at [tumblr's developer site](http://www.tumblr.com/oauth/apps). It's called the OAuth Consumer Key.
+
+The second key can be the blog. It's your tumblr base name to get the posts from.
+
+Optionally you can provide an array of posts to render.
 
 ### Server
 
