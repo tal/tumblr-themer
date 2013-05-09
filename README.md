@@ -1,20 +1,12 @@
-# Darkroom
+# Tumblr Themer
 
-TODO: Write a gem description
+A utility for making tumblr themes easier. Generates a framework for the theme and runs a server to allow you to see your theme with real data while you test.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install with
 
-    gem 'tumblr-themer'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install umblr-themer
+    $ gem install tumblr-themer
 
 ## Usage
 
