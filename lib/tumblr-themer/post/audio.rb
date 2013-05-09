@@ -4,7 +4,7 @@ class TumblrThemer::Post::Audio < TumblrThemer::Post
     data['embed'].gsub(/width=['"](\d+)['"]/,%Q{width="#{size}"})
   end
 
-  tag_block('Caption')
+  block_tag('Caption')
 
   block('AudioEmbed', 'embed')
   [250,400,500,640].each do |size|

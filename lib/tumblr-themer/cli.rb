@@ -12,7 +12,7 @@ module TumblrThemer
     class_option :'theme-dir', :type => :string, :default => '.', :aliases => %w{-t}
 
     desc 'new', 'make a new theme in a folder of the name'
-    def new name
+    def new name='.'
       @name = name
 
       files = Dir[File.join(self.class.source_root,'**/*.tt')].collect do |f|
