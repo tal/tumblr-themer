@@ -24,7 +24,7 @@ class TumblrThemer::Theme
 
   def get_data
     return @post_data if defined?(@post_data)
-    data = TumblrThemer::API.selected_posts
+    data = TumblrThemer::API.posts
     @blog_data = data['blog']
     @post_data = data['posts']
   end

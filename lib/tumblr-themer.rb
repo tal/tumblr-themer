@@ -1,5 +1,4 @@
 require 'time'
-require 'typhoeus'
 require 'url'
 require 'json'
 require "yaml"

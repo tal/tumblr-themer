@@ -11,8 +11,16 @@ module TumblrThemer::API
     end
   end
 
-  def settings
-    YAML.load_file('./tumblr-theme.yml')
+  def settings dirname='.'
+    file = File.expand_path("#{dirname}/tumblr-theme.yml")
+
+    unless File.exist?(file)
+      raise ConfigFileError, "#{file} not found"
+    end
+
+    data = YAML.load_file(file)
+    raise ConfigFileError, "no api_key found in config file" unless data['api_key']
+    data
   end
 
   def api_key
@@ -20,7 +28,11 @@ module TumblrThemer::API
   end
 
   def posts
-    all_posts['response']
+    if settings['posts']
+      selected_posts
+    else
+      all_posts['response']
+    end
   end
 
   def selected_posts
@@ -43,6 +55,18 @@ module TumblrThemer::API
     url[:api_key] = api_key
     url[:reblog_info] = true
     url[:id] = params[:id] if params[:id]
-    url.get.json
+    json = url.get.json
+    puts json.inspect
+
+    status = json['meta']['status']
+    if status == 401
+      raise ConfigFileError, "invalid api_key found in config file"
+    elsif status != 200
+      raise RequestError, json['meta'].inspect
+    end
+    json
   end
+
+  class ConfigFileError < StandardError; end
+  class RequestError < StandardError; end
 end
