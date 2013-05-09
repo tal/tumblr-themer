@@ -4,9 +4,7 @@ A utility for making tumblr themes easier. Generates a framework for the theme a
 
 ## Installation
 
-Install with
-
-    $ gem install tumblr-themer
+You must load this gem manually for now, until it's released to rubygems.
 
 ## Usage
 
@@ -57,6 +55,7 @@ Alternately you can have it print out the whole theme with:
 So many things, starting with:
 
 * Distinguishig between permalink/listing pages
+* Testing
 * More tag support for various post types
 * Too much to list, please help out with what you want/can
 
