@@ -2,7 +2,7 @@ class TumblrThemer::PhotosetPhoto
   include TumblrThemer::TagHelper
   attr_reader :html, :data
 
-  def initialize html, data
+  def initialize html, data, i=0
     @html = TumblrThemer::HtmlSnippet.new(html.dup) if html
     @data = data.dup
   end

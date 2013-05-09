@@ -6,7 +6,6 @@ class TumblrThemer::HtmlSnippet
   end
 
   def tag key, val
-    # puts "tag, #{key.inspect}, #{val.inspect}"
     str.gsub! "{#{key}}", val.to_s
   end
 

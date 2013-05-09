@@ -1,0 +1,6 @@
+<img src="{PhotoURL-500}" width="500" class="main-photo"/>
+{block:Caption}
+<section class="caption">
+  {Caption}
+</section>
+{/block:Caption}

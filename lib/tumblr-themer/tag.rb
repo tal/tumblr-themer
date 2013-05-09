@@ -2,7 +2,7 @@ class TumblrThemer::Tag
   include TumblrThemer::TagHelper
   attr_reader :html, :data
 
-  def initialize html, data
+  def initialize html, data, index=0
     @html = TumblrThemer::HtmlSnippet.new(html.dup) if html
     @data = data.dup
   end
@@ -16,7 +16,7 @@ class TumblrThemer::Tag
   end
 
   tag('Tag')          { data }
-  tag('URLSafeTag')   { data }
-  tag('TagURL')       { data }
-  tag('TagURLChrono') { data }
+  tag('URLSafeTag')   { CGI.escape(data) }
+  tag('TagURL')       { '#' }
+  tag('TagURLChrono') { '#' }
 end

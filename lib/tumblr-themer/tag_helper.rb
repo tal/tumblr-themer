@@ -19,6 +19,18 @@ module TumblrThemer::TagHelper
         true
       end
     end
+
+    # File activesupport/lib/active_support/inflector/methods.rb, line 77
+    def underscore(camel_cased_word)
+      word = camel_cased_word.to_s.dup
+      word.gsub!(/::/, '/')
+      word.gsub!(/([A-Z\d]+)([A-Z][a-z])/,'\1_\2')
+      word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+      word.tr!("-", "_")
+      word.downcase!
+      word
+    end
+
   end
 
   module ClassMethods
@@ -26,7 +38,8 @@ module TumblrThemer::TagHelper
       @tags ||= {}
     end
 
-    def tag name, &blk
+    def tag name, data_name=nil, &blk
+      blk ||= Proc.new { data[data_name||underscore(name)] }
       tags[name] = blk
     end
 
@@ -42,8 +55,14 @@ module TumblrThemer::TagHelper
       @blocks ||= {}
     end
 
-    def block name, &blk
+    def block name, data_name=nil, &blk
+      blk ||= Proc.new { boolify(data[data_name||underscore(name)]) }
       blocks[name] = blk
+    end
+
+    def block_tag name, data_name=nil
+      block(name,data_name)
+      tag(name,data_name)
     end
 
     def inherited subklass

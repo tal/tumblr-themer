@@ -1,0 +1,8 @@
+<section class="video-embed">
+  {VideoEmbed-500}
+</section>
+{block:Caption}
+<section class="body">
+  {Caption}
+</section>
+{/block:Caption}

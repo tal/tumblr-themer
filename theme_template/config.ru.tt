@@ -1,4 +1,9 @@
 require 'rubygems'
+<% if ENV['BUNDLE_GEMFILE'] %>
+require 'bundler'
+Bundler.setup
+<% end %>
+
 require 'tumblr-themer'
 require 'tumblr-themer/server'
 

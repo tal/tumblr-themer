@@ -56,7 +56,6 @@ module TumblrThemer::API
     url[:reblog_info] = true
     url[:id] = params[:id] if params[:id]
     json = url.get.json
-    puts json.inspect
 
     status = json['meta']['status']
     if status == 401

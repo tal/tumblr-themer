@@ -1,0 +1,8 @@
+<div class="quote-text {Length}">
+  {Quote}
+</div>
+{block:Source}
+<div class="quote-source">
+  {Source}
+</div>
+{/block:Source}

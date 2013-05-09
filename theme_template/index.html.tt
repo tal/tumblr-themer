@@ -1,1 +1,26 @@
-Foo template <%= @name %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @name %> Tumblr Theme</title>
+</head>
+<body>
+<h1>Look for me in index.html</h1>
+<div class="posts">
+  {block:Posts}
+  <article class="post {PostType}" id="post{PostID}">
+    {PostsCode}
+
+    {block:HasTags}
+    <section class="tags">
+      {block:Tags}
+        <a href="{TagURL}" class="tag">#{Tag}</a>
+      {/block:Tags}
+
+    </section>
+    {/block:HasTags}
+  </article>
+  {/block:Posts}
+</div>
+</body>
+</html>
+

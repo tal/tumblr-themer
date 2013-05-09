@@ -1,0 +1,8 @@
+<a href="{URL}">
+  <h1 class="post-title">{Name}</h1>
+</a>
+{block:Description}
+<section class="body">
+  {Description}
+</section>
+{/block:Description}

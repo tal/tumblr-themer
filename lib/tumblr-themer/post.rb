@@ -39,9 +39,13 @@ class TumblrThemer::Post
     self.class.tag_iterators.each do |name,opts|
       vals = instance_exec(self,&opts[:blk])
       html.block(name) do |str|
-        vals.collect { |val| opts[:klass].new(str,val).render }.join("\n")
+        strs = []
+        vals.each_with_index { |val,i| strs << opts[:klass].new(str,val,i).render }
+        strs.join("\n")
       end
     end
+
+    puts html.str
 
     self.class.tags.each do |name, blk|
       html.tag(name,instance_exec(self,&blk))
@@ -133,4 +137,21 @@ class TumblrThemer::Post
   tag('Timestamp')           { created_at.to_i}
   # tag('TimeAgo')             { 'fixme' }
 
+  block_tag('NoteCount')
+  tag('NoteCountWithLabel') do
+    num = data['note_count'].to_i
+    str = num.to_s.reverse.gsub(/...(?=.)/,'\&,').reverse
+    str << (num == 1 ? 'note' : 'notes')
+  end
+
+  block('ContentSource', 'source_url')
+  tag('SourceURL')
+  tag('SourceTitle')
+  tag('BlackLogoURL') { 'http://assets.tumblr.com/images/source_logos/fastcompany_7f8b98.png?1092' }
+  tag('LogoWidth') { 74 }
+  tag('LogoHeight') { 11 }
+
+  def source_logo; @source_logo ||= rand(2); end
+  block('SourceLogo') { source_logo == 0 }
+  block('NoSourceLogo') { source_logo == 1 }
 end
