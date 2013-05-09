@@ -38,6 +38,8 @@ You can run a server by the command
 
 This starts a web server on localhost:4567.
 
+You can use the [Pow](http://pow.cx) utility to run the server as well. In fact this method is the recommended way to use this utility.
+
 ### Loading
 
 To take the html and put it into your tumblr account you can run
