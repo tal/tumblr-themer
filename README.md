@@ -25,7 +25,7 @@ The folder structure generated is as such:
     posts/text.html   #=> html for text post
     posts/….html      #=> html for each post type
     tumblr-themer.yml #=> config file
-    
+
 The utility can inject all the post types into the custom tag `{PostsCode}`
 so that you can keep your theme more organized. I'm looking to add more custom partial support in the future.
 
@@ -60,7 +60,7 @@ and it will place the entire theme in your clipboard.
 Alternately you can have it print out the whole theme with:
 
     $ tumblr-themer stdout
-    
+
 ## Todo
 
 So many things, starting with:

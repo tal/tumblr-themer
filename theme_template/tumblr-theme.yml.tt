@@ -1,4 +1,5 @@
 blog: staff
+# get your api key here: http://www.tumblr.com/oauth/apps
 api_key: ...
 # posts:
 # - 47647699733

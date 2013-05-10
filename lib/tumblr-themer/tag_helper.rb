@@ -44,7 +44,7 @@ module TumblrThemer::TagHelper
     end
 
     def for_each name, klass, &blk
-      tag_iterators[name] = {klass: klass, blk: blk}
+      tag_iterators[name] = {:klass => klass, :blk => blk}
     end
 
     def tag_iterators

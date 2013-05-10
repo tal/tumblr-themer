@@ -39,7 +39,7 @@ module TumblrThemer::API
     blog = nil
     posts = []
     settings['posts'].each do |id|
-      data = all_posts(id: id)
+      data = all_posts(:id => id)
       posts << data['response']['posts'].first
       blog ||= data['response']['blog']
     end
