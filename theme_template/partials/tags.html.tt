@@ -1,0 +1,8 @@
+{block:HasTags}
+<section class="tags">
+  {block:Tags}
+    <a href="{TagURL}" class="tag">#{Tag}</a>
+  {/block:Tags}
+
+</section>
+{/block:HasTags}

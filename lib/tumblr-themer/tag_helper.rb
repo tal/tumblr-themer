@@ -31,6 +31,13 @@ module TumblrThemer::TagHelper
       word
     end
 
+    # File activesupport/lib/active_support/inflector/methods.rb, line 55
+    def camelize(term)
+      string = term.to_s
+      string = string.sub(/^[a-z\d]*/) { $&.capitalize }
+      string.gsub(/(?:_|(\/))([a-z\d]*)/) { "#{$1}#{$2.capitalize}" }.gsub('/', '::')
+    end
+
   end
 
   module ClassMethods

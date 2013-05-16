@@ -10,14 +10,7 @@
   <article class="post {PostType}" id="post{PostID}">
     {PostsCode}
 
-    {block:HasTags}
-    <section class="tags">
-      {block:Tags}
-        <a href="{TagURL}" class="tag">#{Tag}</a>
-      {/block:Tags}
-
-    </section>
-    {/block:HasTags}
+    {partial:Tags}
   </article>
   {/block:Posts}
 </div>
