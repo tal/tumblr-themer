@@ -26,10 +26,15 @@ The folder structure generated is as such:
     config.ru         #=> Rack file to allow for use with pow or any other rack app
     posts/text.html   #=> html for text post
     posts/….html      #=> html for each post type
+    partials/….html   #=> html for each partial
     tumblr-themer.yml #=> config file
 
 The utility can inject all the post types into the custom tag `{PostsCode}`
-so that you can keep your theme more organized. I'm looking to add more custom partial support in the future.
+so that you can keep your theme more organized.
+
+#### Partials
+
+You can also generically use partials with the custom tag `{partial:PartialName}` will insert the html from the file `partials/partial_name.html`.
 
 ### Customization
 
