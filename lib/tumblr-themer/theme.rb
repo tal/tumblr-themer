@@ -28,7 +28,7 @@ class TumblrThemer::Theme
   def get_data
     return @post_data if defined?(@post_data)
     if params[:id]
-      data = TumblrThemer::API.all_posts(:id => params[:id])
+      data = TumblrThemer::API.post_by_id(params[:id])
     else
       data = TumblrThemer::API.posts
     end
@@ -56,7 +56,7 @@ class TumblrThemer::Theme
   def render
     html = TumblrThemer::HtmlSnippet.new(@body)
 
-    self.class.tag_iterators.each do |name, opts|
+    tag_iterators.each do |name, opts|
       vals = instance_exec(self,&opts[:blk])
       html.block(name) do |str|
         vals.collect.with_index do |val,i|
@@ -65,13 +65,8 @@ class TumblrThemer::Theme
       end
     end
 
-    self.class.blocks.each do |name,blk|
-      html.block(name,instance_exec(self,&blk))
-    end
-
-    self.class.tags.each do |name, blk|
-      html.tag(name,instance_exec(self,&blk))
-    end
+    render_blocks(html)
+    render_tags(html)
 
     html.str
   end

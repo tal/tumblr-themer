@@ -32,11 +32,9 @@ class TumblrThemer::Post
   def render
     return '' unless html
 
-    self.class.blocks.each do |name,blk|
-      html.block(name,instance_exec(self,&blk))
-    end
+    render_blocks
 
-    self.class.tag_iterators.each do |name,opts|
+    tag_iterators.each do |name,opts|
       vals = instance_exec(self,&opts[:blk])
       html.block(name) do |str|
         strs = []
@@ -45,11 +43,7 @@ class TumblrThemer::Post
       end
     end
 
-    puts html.str
-
-    self.class.tags.each do |name, blk|
-      html.tag(name,instance_exec(self,&blk))
-    end
+    render_tags
 
     html.str
   end

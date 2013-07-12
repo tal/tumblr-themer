@@ -8,9 +8,7 @@ class TumblrThemer::Tag
   end
 
   def render
-    self.class.tags.each do |name, blk|
-      html.tag(name,instance_exec(self,&blk))
-    end
+    render_tags
 
     html.str
   end

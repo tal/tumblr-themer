@@ -8,6 +8,13 @@ class TumblrThemer::ChatLine
     @line_index = index
   end
 
+  def render
+    render_blocks
+    render_tags
+
+    html.str
+  end
+
   tag('Alt') { line_index%2==0 ? 'odd' : 'even' }
 
   block('Label') { boolify(data['label']) }

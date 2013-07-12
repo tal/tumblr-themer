@@ -38,6 +38,32 @@ module TumblrThemer::TagHelper
       string.gsub(/(?:_|(\/))([a-z\d]*)/) { "#{$1}#{$2.capitalize}" }.gsub('/', '::')
     end
 
+    def tags
+      self.class.tags
+    end
+
+    def blocks
+      self.class.blocks
+    end
+
+    def tag_iterators
+      self.class.tag_iterators
+    end
+
+    def render_blocks html=nil
+      html ||= self.html
+      blocks.each do |name,blk|
+        html.block(name,instance_exec(self,&blk))
+      end
+    end
+
+    def render_tags html=nil
+      html ||= self.html
+      tags.each do |name, blk|
+        html.tag(name,instance_exec(self,&blk))
+      end
+    end
+
   end
 
   module ClassMethods

@@ -11,6 +11,12 @@ class TumblrThemer::PhotosetPhoto
     data.find {|p| p['width'] == size}||data.first
   end
 
+  def render
+    render_tags
+
+    html.str
+  end
+
   [500,400,250,100].each do |size|
     tag("PhotoURL-#{size}") { photo_size(size)['url'] }
     tag("PhotoWidth-#{size}") { photo_size(size)['width'] }

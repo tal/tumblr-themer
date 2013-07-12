@@ -50,6 +50,10 @@ module TumblrThemer::API
     }
   end
 
+  def post_by_id id
+    all_posts(:id => id)['response']
+  end
+
   def all_posts(params={})
     url = URL.new("http://api.tumblr.com/v2/blog/#{base_hostname}/posts")
     url[:api_key] = api_key
