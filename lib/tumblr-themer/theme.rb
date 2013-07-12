@@ -136,6 +136,6 @@ class TumblrThemer::Theme
   end
 
   class UndefinedPartial < StandardError; end
-  class RecusiveTag < StandardError; end
+  class RecusiveTag < Exception; end
 
 end
