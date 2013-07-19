@@ -33,14 +33,14 @@ module TumblrThemer
 
     desc 'copy', 'copy the theme into the clipboard'
     def copy
-      theme = TumblrThemer::Theme.new(options[:'theme-dir'])
+      theme = TumblrThemer::Theme.new(options[:'theme-dir'],:prod)
 
       IO.popen('pbcopy', 'w') { |f| f << theme.body.to_s }
     end
 
     desc 'stdout', 'print theme to stdout'
     def stdout
-      theme = TumblrThemer::Theme.new(options[:'theme-dir'])
+      theme = TumblrThemer::Theme.new(options[:'theme-dir'],:prod)
 
       puts theme.body
     end

@@ -12,15 +12,7 @@ module TumblrThemer::API
   end
 
   def settings dirname='.'
-    file = File.expand_path("#{dirname}/tumblr-theme.yml")
-
-    unless File.exist?(file)
-      raise ConfigFileError, "#{file} not found"
-    end
-
-    data = YAML.load_file(file)
-    raise ConfigFileError, "no api_key found in config file" unless data['api_key']
-    data
+    TumblrThemer.settings(dirname)
   end
 
   def api_key
@@ -70,6 +62,5 @@ module TumblrThemer::API
     json
   end
 
-  class ConfigFileError < StandardError; end
   class RequestError < StandardError; end
 end

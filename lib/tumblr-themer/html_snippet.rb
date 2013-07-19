@@ -5,11 +5,19 @@ class TumblrThemer::HtmlSnippet
     @str = str.dup
   end
 
-  def tag key, val
+  def self.tag str, key, val
     str.gsub! "{#{key}}", val.to_s
   end
 
+  def tag key, val
+    self.class.tag str, key, val
+  end
+
   def block _type, tf=true
+    self.class.block str, _type, tf
+  end
+
+  def self.block str, _type, tf=true
     regex = Regexp.new("{block:#{_type}}(.*?){/block:#{_type}}",Regexp::MULTILINE)
 
     if tf

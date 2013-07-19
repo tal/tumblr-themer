@@ -7,7 +7,19 @@ require 'cgi'
 require "tumblr-themer/version"
 
 module TumblrThemer
+  def self.settings dirname='.'
+    file = File.expand_path("#{dirname}/tumblr-theme.yml")
 
+    unless File.exist?(file)
+      raise ConfigFileError, "#{file} not found"
+    end
+
+    data = YAML.load_file(file)
+    raise ConfigFileError, "no api_key found in config file" unless data['api_key']
+    data
+  end
+
+  class ConfigFileError < StandardError; end
 end
 
 require 'tumblr-themer/api'

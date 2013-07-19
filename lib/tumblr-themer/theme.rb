@@ -1,10 +1,11 @@
 class TumblrThemer::Theme
   include TumblrThemer::TagHelper
-  attr_reader :body, :params
+  attr_reader :body, :params, :env
 
-  def initialize dirname, params={}
+  def initialize dirname, env, params={}
     @base = File.expand_path(dirname)
     @params = params
+    @env = env
 
     @body = File.read(File.join(@base,'index.html'))
     @posts = {}
@@ -23,6 +24,14 @@ class TumblrThemer::Theme
     @body.gsub!("{PostsCode}",posts_html.join("\n"))
 
     render_partials
+
+    if env == :dev
+      TumblrThemer::HtmlSnippet.block(@body,'Development',true)
+      TumblrThemer::HtmlSnippet.block(@body,'Production',false)
+    else
+      TumblrThemer::HtmlSnippet.block(@body,'Production',true)
+      TumblrThemer::HtmlSnippet.block(@body,'Development',false)
+    end
   end
 
   def get_data

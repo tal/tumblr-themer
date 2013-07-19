@@ -2,18 +2,18 @@ require 'sinatra/base'
 
 class TumblrThemer::Server < Sinatra::Base
   get '/' do
-    theme = TumblrThemer::Theme.new('.',params)
+    theme = TumblrThemer::Theme.new('.', :dev, params)
 
     theme.render
   end
 
   get '/post/:id' do
-    theme = TumblrThemer::Theme.new('.',params)
+    theme = TumblrThemer::Theme.new('.', :dev, params)
     theme.render
   end
 
   get '/page/:page' do
-    theme = TumblrThemer::Theme.new('.',params)
+    theme = TumblrThemer::Theme.new('.', :dev, params)
     theme.render
   end
 
